@@ -1,6 +1,6 @@
 import os
 
-file_path = "../Lv1"
+file_path = "../Lv2"
 file_name = os.listdir(file_path)
 
 for name in file_name:
