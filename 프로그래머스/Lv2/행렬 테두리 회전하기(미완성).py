@@ -9,23 +9,18 @@ def solution(rows, columns, queries):
 
     for y1, x1, y2, x2 in queries:
         corner = [table[y1 - 1][x1 - 1], table[y1 - 1][x2 - 1], table[y2 - 1][x1 - 1], table[y2 - 1][x2 - 1]]
-        print(corner)
         min_val = min(corner)
 
-        for i in range(x1 - 1, x2 - 1):
-            table[y1 - 1][x2 - i -1] = table[y1 - 1][x2 - i - 1]
-            table[y2 - 1][i] = table[y2 - 1][i+1]
-            min_val = min(min_val, table[y1 - 1][i], table[y2 - 1][i+1])
+        table[y1 - 1][x1:x2] = table[y1 - 1][x1 - 1:x2 - 1]
+        table[y2 - 1][x1-1:x2 - 1] = table[y2 - 1][x1:x2]
+        min_val = min([min_val] + table[y1 - 1][x1 + 1:x2 - 1] + table[y2 - 1][x1:x2 - 2])
         
-        for i in range(y1 - 1, y2 - 1):
-            table[y2 - i][x2 - 1] = table[y2 - i - 1][x2 - 1]
-            table[i][x1 - 1] = table[i + 1][x1 - 1]
-            min_val = min(min_val, table[i][x2 - 1], table[i + 1][x1 - 1])
+        for i in range(y2 - y1):
+            table[y2 - 2 - i][x1 - 1] = table[y2 - 1 - i][x1 - 1]
+            table[y1 + i][x2 - 1] = table[y1 - 1 + i][x2 - 1]
+            min_val = min(min_val, table[y2 - 2 - i][x1 - 1], table[y1 + i][x2 - 1])
 
         table[y1 - 1][x1], table[y1][x2 - 1], table[y2 - 2][x1 - 1], table[y2 - 1][x2 - 2] = corner
-
-        pprint(table)
-        print("-------")
 
         answer.append(min_val)
 
@@ -33,5 +28,5 @@ def solution(rows, columns, queries):
 
 
 print(solution(6, 6, [[2,2,5,4],[3,3,6,6],[5,1,6,3]]))
-print(solution(3, 3, [[1,1,2,2],[1,2,2,3],[2,1,3,2],[2,2,3,3]]))
-print(solution(100, 97, [[1,1,100,97]]))
+solution(3, 3, [[1,1,2,2],[1,2,2,3],[2,1,3,2],[2,2,3,3]])
+solution(100, 97, [[1,1,100,97]])
