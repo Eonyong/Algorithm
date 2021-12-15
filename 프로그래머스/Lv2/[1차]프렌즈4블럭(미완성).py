@@ -2,42 +2,36 @@ from pprint import pprint
 
 def solution(m, n, board):
     answer = 0
-    
-    board = [list(ls) for ls in board]
+    board = [list(b) for b in board]
 
     while True:
-        position = []
-        for row in range(m-1):
-            for col in range(n-1):
-                if board[row][col] == board[row][col+1] and board[row+1][col] == board[row+1][col+1] and board[row][col] == board[row+1][col] and board[row][col]:
-                    position += [[row, col], [row, col+1], [row+1, col], [row+1, col+1]]
+        blocks = set()
+        for row in range(m - 1):
+            for col in range(n - 1):
+                if board[row][col] and board[row][col] == board[row + 1][col] == board[row][col + 1] == board[row + 1][col + 1]:
 
-        for r, c in position:
-            if board[r][c]:
-                board[r][c] = 0
-                answer += 1
+                    blocks.add((row, col))
+                    blocks.add((row + 1, col))
+                    blocks.add((row, col + 1))
+                    blocks.add((row + 1, col + 1))
+
+        for row, col in blocks:
+            board[row][col] = 0
+
+        answer += len(blocks)
 
         for row in range(1, m):
             for col in range(n):
                 if not board[row][col]:
                     board[row][col], board[row - 1][col] = board[row - 1][col], board[row][col]
         pprint(board)
-        
-        if not position:
-            for row in range(m-1):
-              for col in range(n-1):
-                if board[row][col] == board[row][col+1] and board[row+1][col] == board[row+1][col+1] and board[row][col] == board[row+1][col] and board[row][col]:
-                    position += [[row, col], [row, col+1], [row+1, col], [row+1, col+1]]
+        print()
 
-            for r, c in position:
-                if board[r][c]:
-                    board[r][c] = 0
-                    answer += 1
+        if not blocks:
+            break
 
-            for row in range(1, m):
-                for col in range(n):
-                    if not board[row][col]:
-                        board[row][col], board[row - 1][col] = board[row - 1][col], board[row][col]
-            return answer
+    return answer
 
-print(solution(4, 4, ["ABCD", "BACE", "BCDD", "BCDD"]))
+
+solution(4, 5, ["CCBDE", "AAADE", "AAABF", "CCBBF"])
+solution(6, 6, ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"])

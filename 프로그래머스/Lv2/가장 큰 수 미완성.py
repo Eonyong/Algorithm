@@ -1,14 +1,28 @@
-def solution(numbers):
-    answer = ''
-    for i in range(len(numbers)):
-        numbers[i] = [str(numbers[i]) + str(numbers[i])[-1] * (4 - len(str(numbers[i]))), numbers[i]]
-    numbers.sort(key=lambda x: x[0], reverse=True)
+def permu(i, N, arr):
+    global answer
+    if i == N:
+        ans = 0
+        times = 0
+        for items in arr:
+            oper, process = items
+            times += process
+            ans += (times - oper)
+        if answer > ans:
+            answer = ans
+    else:
+        for j in range(i, N):
+            arr[i], arr[j] = arr[j], arr[i]
+            permu(i + 1, N, arr)
+            arr[i], arr[j] = arr[j], arr[i]
 
-    for i, j in numbers:
-        answer += str(j)
-        
+
+def solution(jobs):
+    answer = 500 * 1000
+    jobs = sorted(jobs, key=lambda x: x[0])
+    n = len(jobs)
+    permu(0, n, jobs)
+
     return answer
 
 
-print(solution([6, 10, 2]))
-print(solution([3, 30, 34, 5, 9]))
+solution([[0, 3], [1, 9], [2, 6]])
