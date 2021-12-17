@@ -1,9 +1,6 @@
-from pprint import pprint
-
 def solution(line):
     cross = set()
-    x_min, x_max = 2000, -2000
-    y_min, y_max = 2000, -2000
+    point_x, point_y = 2000, -2000
     for i in range(len(line) - 1):
         for j in range(i + 1, len(line)):
             a, b, e = line[i]
@@ -12,23 +9,23 @@ def solution(line):
                 x, y = (b * f - e * d) / (a * d - b * c), (e * c - a * f) / (a * d - b * c)
                 if x == int(x) and y == int(y):
                     cross.add((int(x), int(y)))
-                    if x_min > x:
-                        x_min = int(x)
-                    if x_max < x:
-                        x_max = int(x)
-                    if y_max < y:
-                        y_max = int(y)
-                    if y_min > y:
-                        y_min = int(y)
-    answer = [["."] * (x_max - x_min + 1) for _ in range(y_max - y_min + 1)]
+                    if point_x > int(x):
+                        point_x = int(x)
+                    if point_y < int(y):
+                        point_y = int(y)
     cross_val = []
     for x, y in cross:
-        cross_val.append([x + x_max, y + y_max])
-    print(cross_val)
-    # for x, y in cross:
-    #     answer[x + x_max][y + y_max] = "*"
+        cross_val.append([abs(y - point_y), abs(x + point_x)])
+    val_x, val_y = zip(*cross_val)
+    answer = [['.']*(max(val_x) - min(val_x) + 1) for _ in range(max(val_y) - min(val_y) + 1)]
+    for x, y in cross_val:
+        answer[y][x] = '*'
 
-    return answer
+    ans = []
+    for i in list(zip(*answer)):
+        ans.append(''.join(i))
+
+    return ans
 
 
 solution([[2, -1, 4], [-2, -1, 4], [0, -1, 1], [5, -8, -12], [5, 8, 12]])
