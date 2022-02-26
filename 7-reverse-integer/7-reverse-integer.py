@@ -7,9 +7,6 @@ class Solution:
             d, m = divmod(x, 10)
             answer = answer * 10 + m
             if not d:
-                if -2**31 <= answer <= 2**31 - 1:
-                    return answer * is_plus
-                else:
-                    return 0
+                return answer * is_plus if -2**31 <= answer <= 2**31 - 1 else 0
             else:
                 x = d
