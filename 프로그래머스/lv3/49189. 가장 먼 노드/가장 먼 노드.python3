@@ -1,0 +1,26 @@
+from collections import deque
+
+def solution(n, edge):
+    nodes = [[] * n for _ in range(n)]
+    for s, e in edge:
+        nodes[s - 1].append(e - 1)
+        nodes[e - 1].append(s - 1)
+        
+    distance = [0] * n
+    visited = [True] + [False] * (n - 1)
+    d, cnt, p = deque(nodes[0]), 1, []
+    while d:
+        num = d.popleft()
+        if not visited[num]:
+            distance[num] = cnt
+        
+            for idx in nodes[num]:
+                if not visited[idx] and idx not in d and idx and idx not in p:
+                    p.append(idx)
+        visited[num] = True
+        if not d and p:
+            cnt += 1
+            for P in p:
+                d.append(P)
+            p = []
+    return distance.count(cnt)
