@@ -2,12 +2,11 @@ from collections import defaultdict
 
 n, m = map(int, input().split())
 S = defaultdict(int)
+num = 0
 for _ in range(n):
     S[input()] = 0
 
 for _ in range(m):
-    words = input()
-    if words in S.keys():
-        S[words] += 1
-
-print(sum(S.values()))
+    if input() in S.keys():
+        num += 1
+print(num)
