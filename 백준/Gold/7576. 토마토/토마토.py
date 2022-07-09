@@ -20,7 +20,7 @@ else:
         for y, x in tomatoes:
             for j, i in [[1, 0], [0, 1], [-1, 0], [0, -1]]:
                 nj, ni = y + j, x + i
-                if 0 <= nj < n and 0 <= ni < m and not visited[nj][ni] and areas[nj][ni] != -1:
+                if 0 <= nj < n and 0 <= ni < m and not visited[nj][ni] and not areas[nj][ni]:
                     visited[nj][ni] = True
                     areas[nj][ni] = 1
                     zeroCnt -= 1
