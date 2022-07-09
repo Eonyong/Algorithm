@@ -1,3 +1,2 @@
 div, mod = divmod(int(input()), 4)
-print('long ' * div, end='')
-print('int')
+print('long ' * div + 'int')
