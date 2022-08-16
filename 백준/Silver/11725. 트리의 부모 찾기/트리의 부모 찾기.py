@@ -1,6 +1,4 @@
-def WhereMyParents(s, trees):
-    global parents
-    nodes = [s]
+def WhereMyParents(nodes, trees, parents):
     while nodes:
         nexts = []
         for node in nodes:
@@ -20,5 +18,5 @@ for _ in range(n - 1):
     trees[s].append(e)
     trees[e].append(s)
 
-for parent in WhereMyParents(1, trees):
+for parent in WhereMyParents([1], trees, parents):
     print(parent)
