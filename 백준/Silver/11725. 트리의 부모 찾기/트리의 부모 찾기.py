@@ -1,0 +1,24 @@
+def WhereMyParents(s, trees):
+    global parents
+    nodes = [s]
+    while nodes:
+        nexts = []
+        for node in nodes:
+            for tree in trees[node]:
+                if not parents[tree]:
+                    parents[tree] = node
+                    nexts.append(tree)
+        nodes = nexts[:]
+    return parents[2:]
+
+
+n = int(input())
+trees = [[] for _ in range(n + 1)]
+parents = [1] * 2 + [0] * (n - 1)
+for _ in range(n - 1):
+    s, e = map(int, input().split())
+    trees[s].append(e)
+    trees[e].append(s)
+
+for parent in WhereMyParents(1, trees):
+    print(parent)
