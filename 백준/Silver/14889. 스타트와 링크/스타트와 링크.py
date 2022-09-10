@@ -16,21 +16,21 @@ def combi(i, n, m, a_team, players, visited, boards):
     else:
         for j in range(n):
             if not visited[j] and a_team[0] < m:
-                if not i:
-                    a_team[i], visited[j] = players[j], True
-                    combi(i + 1, n, m, a_team, players, visited, boards)
-                    a_team[i], visited[j] = 0, False
-                elif i and a_team[i - 1] < players[j]:
+                if not i or (i and a_team[i - 1] < players[j]):
                     a_team[i], visited[j] = players[j], True
                     combi(i + 1, n, m, a_team, players, visited, boards)
                     a_team[i], visited[j] = 0, False
 
+
+import sys
+
 global answer
 answer = float('inf')
-N = int(input())
-boards = [list(map(int, input().split())) for _ in range(N)]
+N = int(sys.stdin.readline())
+half = N // 2
+boards = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 total = sum(map(sum, boards))
 players = list(range(N))
-combi(0, N, N // 2, [0] * (N // 2), players, [False] * N, boards)
+combi(0, N, half, [0] * half, players, [False] * N, boards)
 
 print(answer)
