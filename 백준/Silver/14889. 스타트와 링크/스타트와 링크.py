@@ -15,11 +15,10 @@ def combi(i, n, m, a_team, players, visited, boards):
             answer = abs(val)
     else:
         for j in range(n):
-            if not visited[j] and a_team[0] < m:
-                if not i or (i and a_team[i - 1] < players[j]):
-                    a_team[i], visited[j] = players[j], True
-                    combi(i + 1, n, m, a_team, players, visited, boards)
-                    a_team[i], visited[j] = 0, False
+            if not visited[j] and a_team[0] < m and (not i or (i and a_team[i - 1] < players[j])):
+                a_team[i], visited[j] = players[j], True
+                combi(i + 1, n, m, a_team, players, visited, boards)
+                a_team[i], visited[j] = 0, False
 
 
 import sys
