@@ -4,41 +4,24 @@ from collections import defaultdict
 input = sys.stdin.readline
 
 
-def SortingCol(array, w, h):
-    max_l = w
+def SortingArray(array, l, flag):
+    max_l = l
     nxt_numbers = []
-    for row in range(h):
+    for arr in array:
         nxt = []
         numbers = defaultdict(int)
-        for col in range(w):
-            if array[row][col]:
-                numbers[array[row][col]] += 1
+        for number in arr:
+            if number:
+                numbers[number] += 1
         numbers = sorted(map(list, numbers.items()), key=lambda x: (x[1], x[0]))
         for number in numbers:
             nxt += number
         max_l = max(max_l, len(nxt))
         nxt_numbers.append(nxt)
+    if flag:
+        return list(map(list, zip(*[nxt_number + [0] * (max_l - len(nxt_number)) for nxt_number in nxt_numbers]))), max_l
     else:
         return [nxt_number + [0] * (max_l - len(nxt_number)) for nxt_number in nxt_numbers], max_l
-
-
-def SortingRow(array, w, h):
-    max_l = h
-    nxt_numbers = []
-    for col in range(w):
-        nxt = []
-        numbers = defaultdict(int)
-        for row in range(h):
-            if array[row][col]:
-                numbers[array[row][col]] += 1
-        numbers = sorted(map(list, numbers.items()), key=lambda x: (x[1], x[0]))
-        for number in numbers:
-            nxt += number
-        max_l = max(max_l, len(nxt))
-        nxt_numbers.append(nxt)
-    else:
-        return list(
-            map(list, zip(*[nxt_number + [0] * (max_l - len(nxt_number)) for nxt_number in nxt_numbers]))), max_l
 
 
 r, c, k = map(int, input().split())
@@ -51,9 +34,9 @@ while cnt <= 100:
         print(cnt)
         break
     if h >= w:
-        boards, w = SortingCol(boards, w, h)
+        boards, w = SortingArray(boards, w, 0)
     else:
-        boards, h = SortingRow(boards, w, h)
+        boards, h = SortingArray(list(map(list, zip(*boards))), h, 1)
     cnt += 1
 else:
     print(-1)
