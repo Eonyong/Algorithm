@@ -1,3 +1,5 @@
+import sys
+input = sys.stdin.readline
 n = int(input())
 boards = [list(map(int, input().split())) for _ in range(n)]
 
@@ -11,6 +13,7 @@ for row in range(n):
             for d2 in range(1, n):
                 if col + d1 + d2 < n and 0 <= row - d1 < row + d2 - d1 < row + d2 < n:
                     values = [0, 0, 0, 0, 0]
+                    
                     for r in range(row):
                         if r < row - d1:
                             for c in range(col + d1 + 1):
