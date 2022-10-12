@@ -32,13 +32,16 @@ boards = [list(map(int, input().split())) for _ in range(n)]
 answer = 0
 
 while True:
+    visited = [[False for _ in range(n)] for _ in range(n)]
     zero_cnt, group = 0, {}
     for row in range(n):
         for col in range(n):
-            if boards[row][col] > 0:
-                visited = [[False for _ in range(n)] for _ in range(n)]
+            if boards[row][col] > 0 and not visited[row][col]:
                 visited[row][col] = True
                 temp_group, cnt = BFS(row, col, n, boards, visited)
+                for y, x, color in temp_group:
+                    if not color:
+                        visited[y][x] = False
                 if not group:
                     group, zero_cnt = temp_group, cnt
                 else:
@@ -57,10 +60,8 @@ while True:
     if len(group) < 2:
         break
     answer += len(group) ** 2
-    visited = [[False for _ in range(n)] for _ in range(n)]
     for y, x, color in group:
         boards[y][x] = -2
-        visited[y][x] = True
 
     for i in range(n - 2, -1, -1):  # 밑에서 부터 체크
         for j in range(n):
@@ -75,14 +76,13 @@ while True:
                         break
 
     boards = list(reversed(list(map(list, zip(*boards)))))[:]
-    visited = list(reversed(list(map(list, zip(*visited)))))[:]
 
-    for i in range(n - 2, -1, -1):  # 밑에서 부터 체크
+    for i in range(n - 2, -1, -1):
         for j in range(n):
-            if boards[i][j] > -1:  # -1이 아니면 아래로 다운
+            if boards[i][j] > -1:
                 r = i
                 while True:
-                    if 0 <= r + 1 < n and boards[r + 1][j] == -2:  # 다음행이 인덱스 범위 안이면서 -2이면 아래로 다운
+                    if 0 <= r + 1 < n and boards[r + 1][j] == -2:
                         boards[r + 1][j] = boards[r][j]
                         boards[r][j] = -2
                         r += 1
