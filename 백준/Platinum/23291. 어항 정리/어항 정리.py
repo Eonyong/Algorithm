@@ -24,6 +24,16 @@ def FeedFish(fishes):
     return fishes
 
 
+def MakeOneLine(boards):
+    boards = [deque(board) for board in boards]
+    tmp = []
+    while len(tmp) != n:
+        for row in range(len(boards) - 1, -1, -1):
+            if boards[row]:
+                tmp.append(boards[row].popleft())
+    else:
+        return tmp
+
 
 n, k = map(int, input().split())
 ls = list(map(int, input().split()))
@@ -57,16 +67,8 @@ while True:
     # 인접한 물고기 주고 받기
     bowls = FeedFish(bowls)
 
-
     # 한 줄로 만드는 행위
-    bowls = [deque(bowl) for bowl in bowls]
-    tmp = []
-    while len(tmp) != n:
-        for row in range(len(bowls) - 1, -1, -1):
-            if bowls[row]:
-                tmp.append(bowls[row].popleft())
-    else:
-        bowls = tmp[:]
+    bowls = MakeOneLine(bowls)
 
     # 그림 9 만드는 법
     lft, rgt = bowls[:n // 2][::-1], bowls[n // 2:]
@@ -82,13 +84,8 @@ while True:
 
     # 인접한 물고기에게 밥주는 행위
     bowls = FeedFish(bowls)
-
-    bowls = [deque(bowl) for bowl in bowls]
-    tmp = []
-    while len(tmp) != n:
-        for row in range(len(bowls) - 1, -1, -1):
-            if bowls[row]:
-                tmp.append(bowls[row].popleft())
-    else:
-        ls = tmp[:]
+    
+    # 한 줄로 만드는 행위
+    ls = MakeOneLine(bowls)
+    
 print(cnt)
