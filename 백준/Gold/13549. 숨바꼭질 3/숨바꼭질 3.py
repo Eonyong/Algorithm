@@ -5,7 +5,6 @@ input = sys.stdin.readline
 
 
 def GoTo(s, e, ls):
-    global answer
     tmp = deque()
     tmp.append(s)
     while tmp:
@@ -22,9 +21,8 @@ def GoTo(s, e, ls):
                         ls[m] = ls[t] + 1
 
 
-answer = float('inf')
-ls = [sys.maxsize for _ in range(100001)]
 s, e = map(int, input().split())
+ls = [100001 for _ in range(100001)]
 ls[s] = 0
 GoTo(s, e, ls)
 print(ls[e])
