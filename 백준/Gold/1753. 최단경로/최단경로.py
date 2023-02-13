@@ -1,6 +1,9 @@
 import sys
 import heapq
 
+input = sys.stdin.readline
+
+
 def Dijkstra(middle, nodes, distances):
     queue = []
     heapq.heappush(queue, (0, middle))
@@ -16,7 +19,8 @@ def Dijkstra(middle, nodes, distances):
                 distances[end] = distances[node] + weight
                 heapq.heappush(queue, (distances[end], end))
 
-    return distances[1:n+1]
+    return distances[1:n + 1]
+
 
 n, m = map(int, input().split())
 start = int(input())
