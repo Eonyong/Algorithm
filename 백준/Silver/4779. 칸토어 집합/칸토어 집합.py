@@ -6,9 +6,10 @@ input = sys.stdin.readline
 def Kantoer(n, lines):
     a, b, c = lines[:n // 3], lines[n // 3: (2 * n) // 3], lines[(2 * n) // 3:]
     if n == 3:
-        return '{0} {1}'.format(''.join(a), ''.join(c))
+        return f"{''.join(a)} {''.join(c)}"
     else:
-        return ''.join(Kantoer(n // 3, a)) + ' ' * (n // 3) + ''.join(Kantoer(n // 3, c))
+        return f"{''.join(Kantoer(n // 3, a))}{' ' * (n // 3)}{''.join(Kantoer(n // 3, c))}"
+    
 
 
 while True:
